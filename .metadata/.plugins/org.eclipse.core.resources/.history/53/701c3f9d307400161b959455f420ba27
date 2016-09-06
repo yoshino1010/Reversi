@@ -1,0 +1,22 @@
+package main;
+
+public class AI {
+	private Bord myBord;
+	private int myColor;
+	AI(Bord bord, int color){
+		myBord = bord;
+		myColor = color;
+	}
+	
+	public void put(){
+		for (int i = 0; i < 8; i++){
+			for (int j = 0; j < 8; j++){
+				myBord.put(i, j, )
+			}
+		}
+	}
+	
+	public void pass(){
+		
+	}
+}

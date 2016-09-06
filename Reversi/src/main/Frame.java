@@ -29,14 +29,6 @@ public class Frame extends JFrame{
 		contentPane.add(jp, BorderLayout.CENTER);
 	}
 	
-	public boolean put(int x, int y, int color){
-		if (mybord.put(x, y, color)){
-			repainting();
-			return true;
-		}
-		return false;
-	}
-	
 	public void repainting(){
 		repaint();
 	}

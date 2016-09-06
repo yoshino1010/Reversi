@@ -1,0 +1,13 @@
+package main;
+
+public class Main {
+
+	public static void main(String[] args) {
+		Game game = new Game();
+		Player player = new Plyer();
+		Bord bord = new Bord();
+		Frame frame = new Frame("Reversi", bord);
+		game.Start(frame, bord);
+	}
+
+}

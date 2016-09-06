@@ -6,39 +6,86 @@ import java.awt.event.MouseListener;
 import java.util.Random;
 
 public class Game implements MouseListener{
-	private Bord bord = new Bord();
-	private Frame frame = new Frame("Reversi", bord);
+	private Bord myBord = new Bord();
+	private Frame myFrame = new Frame("Reversi", myBord);
 	private int precedence;
-	private int turn = 0;
+	private Player player;
+	private AI enemy, enemy2;
+	private int turn = 1;
 	
 	public void Start(){
-		frame.addMouseListener(this);
-		precedence = setPrecedence(); //先行を決める
-		System.out.println("turn: " + turn);
-		if (precedence == 1) System.out.println("You are black.");
-		else System.out.println("You are white.");
+		init();
+		setPrecedence(); //先行を決める
+		createPlayer(); //プレイヤー作成
+		createAI(); //敵作成
+		
+		
+		while(true){
+			enemy.put();
+			myFrame.repaint();
+			if (!myBord.checkEnd()){
+				break;
+			}
+			try{
+				Thread.sleep(150);
+			}catch(InterruptedException a){};
+			enemy2.put();
+			myFrame.repaint();
+			if (!myBord.checkEnd()){
+				break;
+			}
+		}
+		/*if (turn % 2 != player.getPrecedence()){
+			enemy.put();
+			myFrame.repainting();
+			turn++;
+		}*/
 	}
 	
-	public int setPrecedence(){
+	private void createPlayer(){
+		if (precedence == 0){
+			System.out.println("Player is white.");
+			System.out.println("後行");
+			player = new Player("player1", myBord, Bord.WHITE, precedence);
+		}else{
+			System.out.println("Player is black.");
+			System.out.println("先行");
+			player = new Player("player1", myBord, Bord.BLACK, precedence);
+		}
+	}
+	
+	private void createAI(){
+		if (precedence == 0){
+			enemy = new AI("enemy1", myBord, Bord.BLACK);
+			enemy2 = new AI("enemy2", myBord, Bord.WHITE);
+		}else{
+			enemy = new AI("enemy1", myBord, Bord.WHITE);
+			enemy2 = new AI("enemy2", myBord, Bord.BLACK);
+		}
+	}
+	
+	private void init(){
+		myFrame.addMouseListener(this);
+	}
+	
+	public void setPrecedence(){
 		Random rnd = new Random();
-		return rnd.nextInt(2);
+		precedence = rnd.nextInt(2);
 	}
 	
 	public void mouseClicked(MouseEvent e){
 		Point point = e.getPoint();
-		if (precedence == 0){
-			if (frame.put(point.x / 50, (point.y - 26) / 50, Bord.WHITE)){
-				System.out.println("turn: " + turn);
-				System.out.println("You are black.");
+		if (turn % 2 == player.getPrecedence()){
+			System.out.println(point.x / 50 + ", " + (point.y - 26) / 50);
+			if (player.put(point.x / 50, (point.y - 26) / 50)){
+				myFrame.repaint();
 				turn++;
-				precedence = 1;
-			}
-		}else{
-			if (frame.put(point.x / 50, (point.y - 26) / 50, Bord.BLACK)){
-				System.out.println("turn: " + turn);
-				System.out.println("You are white.");
+				try{
+					Thread.sleep(50);
+				}catch(InterruptedException a){}
+				enemy.put();
+				myFrame.repaint();
 				turn++;
-				precedence = 0;
 			}
 		}
 	 }

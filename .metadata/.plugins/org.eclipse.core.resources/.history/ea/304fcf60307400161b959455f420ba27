@@ -1,0 +1,20 @@
+package main;
+
+public class AI {
+	private Bord myBord;
+	AI(Bord bord){
+		myBord = bord;
+	}
+	
+	public void put(){
+		
+	}
+	
+	private void canPutLocation(){
+		
+	}
+	
+	public void pass(){
+		
+	}
+}

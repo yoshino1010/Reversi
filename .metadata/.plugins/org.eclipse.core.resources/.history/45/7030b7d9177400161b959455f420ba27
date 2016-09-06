@@ -1,0 +1,12 @@
+package main;
+
+public class Main {
+
+	public static void main(String[] args) {
+		Game game = new Game();
+		Bord bord = new bord();
+		Frame frame = new Frame();
+		game.Start();
+	}
+
+}

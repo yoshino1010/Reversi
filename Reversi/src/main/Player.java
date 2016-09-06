@@ -1,30 +1,27 @@
 package main;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
-import javax.swing.JFrame;
-
-public class Player implements MouseListener{
-	String myName = "player1";
-	JFrame myFrame;
+public class Player{
+	private String myName = "player1";
+	private Bord myBord;
+	private int myColor;
+	private int precedence;
 	
-	Player(String name, JFrame frame){
+	Player(String name, Bord bord, int color, int pre){
 		myName = name;
-		myFrame = frame;
+		myColor = color;
+		myBord = bord;
+		precedence = pre;
 	}
 	
-	public void put(){
-		
+	public boolean put(int x, int y){
+		return myBord.put(x, y, myColor);
+	}
+	
+	public int getPrecedence(){
+		return precedence;
 	}
 	
 	public void pass(){
 		
 	}
-	
-	public void mouseClicked(MouseEvent e){}
-	public void mouseEntered(MouseEvent e){}
-	public void mouseExited(MouseEvent e){}
-	public void mousePressed(MouseEvent e){}
-	public void mouseReleased(MouseEvent e){}
 }

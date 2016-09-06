@@ -1,0 +1,22 @@
+package main;
+
+import javax.swing.JFrame;
+
+public class Player{
+	String myName = "player1";
+	JFrame myFrame;
+	int color;
+	
+	Player(String name, JFrame frame){
+		myName = name;
+		myFrame = frame;
+	}
+	
+	public void put(int x, int y, int color){
+		
+	}
+	
+	public void pass(){
+		
+	}
+}

@@ -10,6 +10,17 @@ public class Bord {
 		init();
 	}
 	
+	public boolean checkEnd(){
+		for(int i = 0; i < 8; i++){
+			for(int j = 0; j < 8; j++){
+				if (state[i][j] == NONE){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	public int getState(int x, int y){
 		return state[x][y];
 	}
