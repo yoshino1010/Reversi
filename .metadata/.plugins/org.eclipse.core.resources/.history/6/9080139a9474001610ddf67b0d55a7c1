@@ -1,0 +1,46 @@
+package main;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+public class AI {
+	private Bord myBord;
+	private int myColor;
+	private String myName;
+	private ArrayList<Integer> pointx = new ArrayList<Integer>();
+	private ArrayList<Integer> pointy = new ArrayList<Integer>();
+	
+	AI(String name, Bord bord, int color){
+		myBord = bord;
+		myColor = color;
+		myName = name;
+	}
+	
+	public void put(){
+		int x, y;
+		System.out.println("敵が打ちます");
+		check();
+		Random rnd = new Random();
+		int rndom = rnd.nextInt(pointx.size());
+		System.out.println(pointx.size());
+		myBord.put(pointx.get(rndom), pointy.get(rndom), myColor);
+		System.out.println("敵が打ち終わりました");
+	}
+	
+	private void check(){
+		pointx.clear();
+		pointy.clear();
+		for(int x = 0; x < 8; x++){
+			for(int y = 0; y < 8; y++){
+				if(myBord.putCheck(x, y, myColor)){
+					pointx.add(x);
+					pointy.add(y);
+				}
+			}
+		}
+	}
+	
+	public void pass(){
+		
+	}
+}

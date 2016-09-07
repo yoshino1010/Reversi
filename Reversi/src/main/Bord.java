@@ -5,20 +5,53 @@ public class Bord {
 	public static final int WHITE = 1; //白の駒が置いてある
 	public static final int BLACK = 2; //黒の駒が置いてある
 	private int state[][] = new int[8][8];
+	private boolean flag = false;
 	
 	Bord(){
 		init();
+	}
+	
+	public int victory(){
+		int white = 0, black = 0;
+		for(int i = 0; i < 8; i++){
+			for(int j = 0; j < 8; j++){
+				if(state[i][j] == WHITE){
+					white++;
+				}else if (state[i][j] == BLACK){
+					black++;
+				}
+			}
+		}
+		if(white < black){
+			return BLACK;
+		}else{
+			return WHITE;
+		}
+	}
+	
+	public boolean putCheck(int x, int y, int color){
+		flag = false;
+		boolean check1, check2, check3;
+		if (state[x][y] == NONE){
+			check1 = checkVertical(x, y, color);
+			check2 = checkHorizontal(x, y, color);
+			check3 = checkSkew(x, y, color);
+			if (check1 || check2 || check3){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public boolean checkEnd(){
 		for(int i = 0; i < 8; i++){
 			for(int j = 0; j < 8; j++){
 				if (state[i][j] == NONE){
-					return true;
+					return false;
 				}
 			}
 		}
-		return false;
+		return true;
 	}
 	
 	public int getState(int x, int y){
@@ -26,6 +59,7 @@ public class Bord {
 	}
 	
 	public boolean put(int x, int y, int color){
+		flag = true;
 		boolean check1, check2, check3;
 		if (state[x][y] == NONE){
 			check1 = checkVertical(x, y, color);
@@ -40,16 +74,16 @@ public class Bord {
 	}
 	
 	/*盤面状態初期化*/
-	private void init(){
+	public void init(){
 		for(int i = 0; i < 8; i++){
 			for(int j = 0; j < 8; j++){
 				state[i][j] = NONE;
 			}
 		}
 		state[3][3] = WHITE;
-		state[4][3] = WHITE;
+		state[4][3] = BLACK;
 		state[3][4] = BLACK;
-		state[4][4] = BLACK;
+		state[4][4] = WHITE;
 	}
 
 	/*縦列チェック*/
@@ -59,8 +93,10 @@ public class Bord {
 			if (state[x][y-1] != color && state[x][y-1] != NONE){
 				for (int i = y-2; i >= 0; i--){
 					if (state[x][i] == color){
+						if(flag){
 						for (int j = y-1; j > i; j--){
 							reverse(x, j ,color);
+						}
 						}
 						put++;
 						break;
@@ -73,8 +109,10 @@ public class Bord {
 			if (state[x][y+1] != color && state[x][y+1] != NONE){
 				for(int i = y+2; i < 8; i++){
 					if (state[x][i] == color){
+						if(flag){
 						for (int j = y+1; j < i; j++){
 							reverse(x, j, color);
+						}
 						}
 						put++;
 						break;
@@ -87,7 +125,7 @@ public class Bord {
 	}
 	
 	private void reverse(int x, int y, int color){
-		System.out.println(x + ", " + y);
+		//System.out.println(x + ", " + y);
 		if (color == WHITE){
 			state[x][y] = WHITE;
 		}else if(color == BLACK){
@@ -102,8 +140,10 @@ public class Bord {
 			if (state[x-1][y] != color && state[x-1][y] != NONE){
 				for (int i = x-2; i >= 0; i--){
 					if (state[i][y] == color){
-						for (int j = x-1; j > i; j--){
-							reverse(j, y ,color);
+						if(flag){
+							for (int j = x-1; j > i; j--){
+								reverse(j, y ,color);
+							}
 						}
 						put++;
 						break;
@@ -115,8 +155,10 @@ public class Bord {
 			if (state[x+1][y] != color && state[x+1][y] != NONE){
 				for(int i = x+2; i < 8; i++){
 					if (state[i][y] == color){
-						for (int j = x+1; j < i; j++){
-							reverse(j, y, color);
+						if(flag){
+							for (int j = x+1; j < i; j++){
+								reverse(j, y, color);
+							}
 						}
 						put++;
 						break;
@@ -151,8 +193,10 @@ public class Bord {
 				if (state[x+1][y-1] != color && state[x+1][y-1] != NONE){
 					for (int i = x+2, j = y-2; i < 8 && j >= 0; i++, j--){
 						if (state[i][j] == color){
-							for (int i2 = x+1, j2 = y-1; i2 <= i && j2 >= j; i2++, j2--){
-								reverse(i2, j2, color);
+							if(flag){
+								for (int i2 = x+1, j2 = y-1; i2 <= i && j2 >= j; i2++, j2--){
+									reverse(i2, j2, color);
+								}
 							}
 							put++;
 							break;
@@ -172,8 +216,10 @@ public class Bord {
 			if (state[x-1][y-1] != color && state[x-1][y-1] != NONE){
 				for(int i = x-2, j = y-2; i >= 0 && j >= 0; i--, j--){
 					if (state[i][j] == color){
-						for(int i2 = x-1, j2 = y-1; i2 >= i && j2 >= j; i2--, j2--){
-							reverse(i2, j2, color);
+						if(flag){
+							for(int i2 = x-1, j2 = y-1; i2 >= i && j2 >= j; i2--, j2--){
+								reverse(i2, j2, color);
+							}
 						}
 						put++;
 						break;
@@ -192,8 +238,10 @@ public class Bord {
 			if (state[x+1][y+1] != color && state[x+1][y+1] != NONE){
 				for (int i = x+2, j = y+2; i < 8 && j < 8; i++, j++){
 					if(state[i][j] == color){
-						for(int i2 = x+1, j2 = y+1; i2 < i && j2 < j; i2++, j2++){
-							reverse(i2, j2, color);
+						if(flag){
+							for(int i2 = x+1, j2 = y+1; i2 < i && j2 < j; i2++, j2++){
+								reverse(i2, j2, color);
+							}
 						}
 						put++;
 						break;
@@ -212,8 +260,10 @@ public class Bord {
 			if (state[x-1][y+1] != color && state[x-1][y+1] != NONE){
 				for (int i = x-2, j = y+2; i >= 0 && j < 8; i--, j++){
 					if(state[i][j] == color){
+						if(flag){
 						for(int i2 = x-1, j2 = y+1; i2 > i && j2 < j; i2--, j2++){
 							reverse(i2, j2, color);
+						}
 						}
 						put++;
 						break;

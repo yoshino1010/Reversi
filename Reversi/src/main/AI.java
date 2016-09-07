@@ -1,22 +1,53 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class AI {
 	private Bord myBord;
 	private int myColor;
 	private String myName;
+	private Evaluate evalu = new Evaluate();
+	private ArrayList<Integer> pointx = new ArrayList<Integer>();
+	private ArrayList<Integer> pointy = new ArrayList<Integer>();
+	
 	AI(String name, Bord bord, int color){
 		myBord = bord;
 		myColor = color;
 		myName = name;
 	}
 	
-	public void put(){
+	public int getColor(){
+		return myColor;
+	}
+	
+	public boolean put(){
+		int max = 0, x = 0, y = 0;
 		System.out.println("敵が打ちます");
-		for (int i = 0; i < 8; i++){
-			for (int j = 0; j < 8; j++){
-				if (myBord.put(i, j, myColor)){
-					System.out.println("打ち終わりました");
-					return;
+		check();
+		if (pointx.size() == 0){
+			return false;
+		}
+		for (int i = 0; i < pointx.size(); i++){
+			if(max < evalu.get(pointx.get(i), pointy.get(i))){
+				max = evalu.get(pointx.get(i), pointy.get(i));
+				x = pointx.get(i);
+				y = pointy.get(i);
+			}
+		}
+		
+		System.out.println("敵が打ち終わりました");
+		return myBord.put(x, y, myColor);
+	}
+	
+	private void check(){
+		pointx.clear();
+		pointy.clear();
+		for(int x = 0; x < 8; x++){
+			for(int y = 0; y < 8; y++){
+				if(myBord.putCheck(x, y, myColor)){
+					pointx.add(x);
+					pointy.add(y);
 				}
 			}
 		}

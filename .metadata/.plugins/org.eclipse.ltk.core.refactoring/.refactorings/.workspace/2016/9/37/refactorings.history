@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="リソース &apos;Reversi/src/main/Point.java&apos; を削除" deleteContents="false" description="リソース &apos;Reversi/src/main/Point.java&apos; を削除" element1="/Reversi/src/main/Point.java" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1473220724140"/>
+</session>

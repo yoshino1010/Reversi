@@ -20,10 +20,27 @@ public class Game implements MouseListener{
 		createAI(); //敵作成
 		
 		
-		while(true){
-			enemy.put();
-			myFrame.repaint();
-			if (!myBord.checkEnd()){
+		//for(int i = 0; i < 100; i++){
+			//while(true){
+			//System.out.println("ラウンド" + i);
+			//enemy.put();
+			//myFrame.repaint();
+			/*if (myBord.checkEnd() || !enemy2.put()){
+				if(myBord.victory() == enemy.getColor()){
+					if(enemy.getColor() == Bord.WHITE){
+						enemy2 = new AI("enemy2", myBord, Bord.BLACK);
+					}else{
+						enemy2 = new AI("enemy2", myBord, Bord.WHITE);
+					}
+				}else{
+					if(enemy2.getColor() == Bord.WHITE){
+						enemy = new AI("enemy2", myBord, Bord.BLACK);
+					}else{
+						enemy = new AI("enemy2", myBord, Bord.WHITE);
+					}
+				}
+				myBord.init();
+				myFrame.repaint();
 				break;
 			}
 			try{
@@ -31,15 +48,31 @@ public class Game implements MouseListener{
 			}catch(InterruptedException a){};
 			enemy2.put();
 			myFrame.repaint();
-			if (!myBord.checkEnd()){
+			if (myBord.checkEnd() || !enemy.put()){
+				if(myBord.victory() == enemy.getColor()){
+					if(enemy.getColor() == Bord.WHITE){
+						enemy2 = new AI("enemy2", myBord, Bord.BLACK);
+					}else{
+						enemy2 = new AI("enemy2", myBord, Bord.WHITE);
+					}
+				}else{
+					if(enemy2.getColor() == Bord.WHITE){
+						enemy = new AI("enemy2", myBord, Bord.BLACK);
+					}else{
+						enemy = new AI("enemy2", myBord, Bord.WHITE);
+					}
+				}
+				myBord.init();
+				myFrame.repaint();
 				break;
 			}
-		}
-		/*if (turn % 2 != player.getPrecedence()){
+			}
+		}*/
+		if (turn % 2 != player.getPrecedence()){
 			enemy.put();
 			myFrame.repainting();
 			turn++;
-		}*/
+		}
 	}
 	
 	private void createPlayer(){
@@ -76,16 +109,30 @@ public class Game implements MouseListener{
 	public void mouseClicked(MouseEvent e){
 		Point point = e.getPoint();
 		if (turn % 2 == player.getPrecedence()){
-			System.out.println(point.x / 50 + ", " + (point.y - 26) / 50);
+			//System.out.println(point.x / 50 + ", " + (point.y - 26) / 50);
 			if (player.put(point.x / 50, (point.y - 26) / 50)){
 				myFrame.repaint();
 				turn++;
+				if(myBord.checkEnd()){
+					if(myBord.victory() == enemy.getColor()){
+						System.out.println("敵の勝ち");
+					}else{
+						System.out.println("俺の勝ち");
+					}
+				}
 				try{
 					Thread.sleep(50);
 				}catch(InterruptedException a){}
 				enemy.put();
 				myFrame.repaint();
 				turn++;
+				if(myBord.checkEnd()){
+					if(myBord.victory() == enemy.getColor()){
+						System.out.println("敵の勝ち");
+					}else{
+						System.out.println("俺の勝ち");
+					}
+				}
 			}
 		}
 	 }
