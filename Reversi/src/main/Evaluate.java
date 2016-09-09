@@ -15,6 +15,18 @@ public class Evaluate {
 		}
 	}
 	
+	public void valueClear(){
+		value.clear();
+	}
+	
+	public void add(int num){
+		value.add(num);
+	}
+	
+	public int get(int i){
+		return value.get(i);
+	}
+	
 	public int get(int x, int y){
 		int index = x + y * 7;
 		return value.get(index);

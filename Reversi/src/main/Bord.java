@@ -11,6 +11,23 @@ public class Bord {
 		init();
 	}
 	
+	public boolean passCheck(int color){
+		flag = false;
+		boolean check1, check2, check3;
+		
+		for(int i = 0; i < 8; i++){
+			for(int j = 0; j < 8; j++){
+				check1 = checkVertical(i, j, color);
+				check2 = checkHorizontal(i, j, color);
+				check3 = checkSkew(i, j, color);
+				if(check1 || check2 || check3){
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
 	public int victory(){
 		int white = 0, black = 0;
 		for(int i = 0; i < 8; i++){
@@ -52,6 +69,30 @@ public class Bord {
 			}
 		}
 		return true;
+	}
+	
+	public int countWhite(){
+		int count = 0;
+		for(int i = 0; i < 8; i++){
+			for(int j = 0; j < 8; j++){
+				if(state[i][j] == WHITE){
+					count++;
+				}
+			}
+		}
+		return count;
+	}
+	
+	public int countBlack(){
+		int count = 0;
+		for(int i = 0; i < 8; i++){
+			for(int j = 0; j < 8; j++){
+				if(state[i][j] == BLACK){
+					count++;
+				}
+			}
+		}
+		return count;
 	}
 	
 	public int getState(int x, int y){

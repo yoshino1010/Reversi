@@ -29,10 +29,6 @@ public class Frame extends JFrame{
 		contentPane.add(jp, BorderLayout.CENTER);
 	}
 	
-	public void repainting(){
-		repaint();
-	}
-	
 	public void paint(Graphics g){
 		for (int x = 0; x < 8 * 50; x += 50){
 			for (int y = 22; y < 8 * 50 + 22; y += 50){

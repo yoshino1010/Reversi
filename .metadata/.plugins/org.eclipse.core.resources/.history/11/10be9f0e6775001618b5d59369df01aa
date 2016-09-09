@@ -1,0 +1,22 @@
+package main;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+public class Evaluate {
+	//private ArrayList<Integer> value = new ArrayList<Integer>();
+	private int value[][] = {{51, 12, 19, 41, 61, 18, 59, 14}, {35, 45, 58, 43, 60, 52, 20, 5}, {24, 62, 60, 9, 44, 5, 16, 40}, {56, 50, 30, 38, 2, 52, 25, 3}, {2, 6, 28, 13, 16, 46, 23, 41},{9, 32, 59, 11, 46, 1, 20, 52}, {53, 17, 13, 9, 56, 7, 43, 39}, {12, 19, 41, 61, 18, 59, 14, 34}};
+	Evaluate(){
+		Random rand = new Random();
+		for(int i = 0; i < 8; i++){
+			for(int j = 0; j < 8; j++){
+				value.add(rand.nextInt(64));
+			}
+		}
+	}
+	
+	public int get(int x, int y){
+		int index = x + y * 7;
+		return value.get(index);
+	}
+}

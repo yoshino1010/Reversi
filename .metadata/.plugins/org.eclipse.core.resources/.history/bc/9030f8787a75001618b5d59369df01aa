@@ -1,0 +1,72 @@
+package main;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+public class Game{
+	private static final int INDIVIDUALNUM = 100;
+	private static final int GENELATIONNUM = 100;
+	private Bord myBord = new Bord();
+	private Frame myFrame = new Frame("Reversi", myBord);
+	private int precedence;
+	private ArrayList<AI> enemys = new ArrayList<AI>();
+	private int turn = 1;
+	
+	public void Start(){
+		createAI(); //初期個体生成
+		for(int i = 0; i < GENELATIONNUM; i++){
+			battle();
+		}
+	}
+	
+	private void battle(){
+		for(int i = 0; i < INDIVIDUALNUM; i+=2){
+			AI enemy = enemys.get(0);
+			AI enemy2 = enemys.get(1);
+			enemys.remove(0);
+			enemys.remove(0);
+			initEnemy(enemy, enemy2);
+			while(true){
+				enemy.put(); //駒を置く
+				System.out.println("色: " + enemy.getColor());
+				update(); //再描画
+				try{
+					Thread.sleep(100);
+				}catch(InterruptedException e){}
+				enemy2.put(); //駒を置く
+				System.out.println("色: " + enemy2.getColor());
+				update(); //再描画
+				if(myBord.checkEnd()) break;
+			}
+			/*勝者判定*/
+			if (myBord.victory() == enemy.getColor()){
+				System.out.println("勝者: " + enemy.getName() + "(" + enemy.getColor() + ")");
+				enemy.victory();
+			}else{
+				System.out.println("勝者: " + enemy2.getName() + "("+ enemy2.getColor() +")");
+				enemy2.victory();
+			}
+			myBord.init();
+			update();
+		}
+	}
+	
+	private void update(){
+		myFrame.repaint();
+	}
+	private void initEnemy(AI enemy, AI enemy2){
+		enemy.setColor(Bord.WHITE);
+		enemy2.setColor(Bord.BLACK);
+	}
+	
+	private void createAI(){
+		for(int i = 0; i < INDIVIDUALNUM; i++){
+			enemys.add(new AI("enemy" + i, myBord));
+		}
+	}
+	
+	public void setPrecedence(){
+		Random rnd = new Random();
+		precedence = rnd.nextInt(2);
+	}
+}
