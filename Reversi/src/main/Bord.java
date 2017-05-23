@@ -1,20 +1,24 @@
 package main;
 
-public class Bord {
+import javax.swing.*;
+
+class Bord extends JPanel{
 	private static final int NONE = 0; //何も置いてない
-	public static final int WHITE = 1; //白の駒が置いてある
-	public static final int BLACK = 2; //黒の駒が置いてある
+	static final int WHITE = 1; //白の駒が置いてある
+	static final int BLACK = 2; //黒の駒が置いてある
 	private int state[][] = new int[8][8];
 	
 	Bord(){
 		init();
 	}
 	
-	public int getState(int x, int y){
+	int getState(int x, int y){
 		return state[x][y];
 	}
+
+
 	
-	public boolean put(int x, int y, int color){
+	boolean put(int x, int y, int color){
 		boolean check1, check2, check3;
 		if (state[x][y] == NONE){
 			check1 = checkVertical(x, y, color);
@@ -71,8 +75,7 @@ public class Bord {
 				}
 			}
 		}
-		if (put > 0) return true;
-		return false;
+		return put > 0;
 	}
 	
 	private void reverse(int x, int y, int color){
@@ -113,8 +116,7 @@ public class Bord {
 				}
 			}
 		}
-		if (put > 0) return true;
-		return false;
+		return put > 0;
 	}
 	
 	/*斜め列チェック*/
@@ -124,10 +126,7 @@ public class Bord {
 		check2 = skewTopLeft(x, y, color);
 		check3 = skewUnderRight(x, y, color);
 		check4 = skewUnderLeft(x, y, color);
-		if (check1 || check2 || check3 || check4){
-			return true;
-		}
-		return false;
+		return check1 || check2 || check3 || check4;
 	}
 	
 	
@@ -150,8 +149,7 @@ public class Bord {
 				}
 			}
 		}
-		if(put > 0) return true;
-		return false;
+		return put > 0;
 	}
 	
 	/*斜め左上列チェック*/
@@ -170,8 +168,7 @@ public class Bord {
 				}
 			}
 		}
-		if (put > 0) return true;
-		return false;
+		return put > 0;
 	}
 	
 	/*斜め右下列チェック*/
@@ -190,8 +187,7 @@ public class Bord {
 				}
 			}
 		}
-		if (put > 0) return true;
-		return false;
+		return put > 0;
 	}
 	
 	/*斜め左下列チェック*/
@@ -210,7 +206,6 @@ public class Bord {
 				}
 			}
 		}
-		if (put > 0) return true;
-		return false;
+		return put > 0;
 	}
 }
